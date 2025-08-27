@@ -40,8 +40,7 @@ resource "google_container_node_pool" "primary_nodes" {
     ]
   }
 }
-<<<<<<< HEAD
-=======
+
 
 resource "google_container_cluster" "primary" {
   name     = "cka-gke"
@@ -66,4 +65,4 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
->>>>>>> df1731b (Add Terraform GKE setup)
+
