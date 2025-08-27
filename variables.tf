@@ -1,16 +1,22 @@
 variable "project_id" {
-  description = "GCP Project ID"
+  description = "GCP project ID"
   type        = string
 }
 
 variable "region" {
-  description = "GCP Region"
+  description = "GCP region"
   type        = string
   default     = "us-east1"
 }
 
-variable "node_count" {
-  description = "Number of GKE nodes"
-  type        = number
-  default     = 2
+variable "zone" {
+  description = "GCP zone"
+  type        = string
+  default     = "us-east1-b"
+}
+
+variable "GOOGLE_CREDENTIALS" {
+  description = "GCP service account JSON"
+  type        = string
+  sensitive   = true
 }
