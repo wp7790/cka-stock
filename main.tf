@@ -3,6 +3,13 @@
 resource "google_container_cluster" "primary" {
   name     = "cka-gke"
   location = var.region
+ # A regional cluster with the control plane replicated across multiple zones.
+  # We will manually specify the node locations for total node count control.
+  node_locations = [
+    "us-east1-b",
+    "us-east1-c",
+    "us-east1-d"
+  ]
 
   remove_default_node_pool = true
   initial_node_count       = 1
@@ -18,7 +25,7 @@ resource "google_container_node_pool" "primary_nodes" {
   location   = var.region
   cluster    = google_container_cluster.primary.name
 
-  node_count = 2
+  node_count = 1
 
 
   node_config {
@@ -31,13 +38,16 @@ resource "google_container_node_pool" "primary_nodes" {
 }
 
 resource "helm_release" "argocd_cd" {
-  name.        ="argo-cd"
+  name        ="argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
   chart =      "argo-cd" 
   namespace    ="argocd"
   version      = "5.34.5"
   create_namespace   = true 
-  
+  depends_on = [
+    google_container_cluster.primary,
+    google_container_node_pool.primary_nodes
+]
 
   values = [
     yamlencode ({
