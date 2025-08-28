@@ -18,7 +18,7 @@ resource "google_container_node_pool" "primary_nodes" {
   location   = var.region
   cluster    = google_container_cluster.primary.name
 
-  node_count = var.node_count
+  node_count = 2
 
 
   node_config {
