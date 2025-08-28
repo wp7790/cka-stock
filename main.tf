@@ -30,3 +30,22 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
+resource "helm_release" "argocd_cd" {
+  name.        ="argo-cd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart =      "argo-cd" 
+  namespace    ="argocd"
+  create_namespace   =true 
+  
+
+  values = [
+    yamlencode ({
+      server = {
+        service = {
+          type="LoadBalancer"
+        }
+      }
+    })
+  ]
+}
+
