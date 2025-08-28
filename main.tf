@@ -8,7 +8,7 @@ resource "google_container_cluster" "primary" {
   node_locations = [
     "us-east1-b",
     "us-east1-c",
-    "us-east1-d"
+    
   ]
 
   remove_default_node_pool = true
